@@ -1,6 +1,6 @@
-package tags;
+package tag;
 
-import utils.BlockUtils;
+import util.BlockUtil;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.BodyContent;
@@ -25,13 +25,13 @@ public class OverrideTag extends BodyTagSupport {
             return EVAL_PAGE;
         }
         BodyContent b = getBodyContent();
-        String varName = BlockUtils.getOverrideVariableName(name);
+        String varName = BlockUtil.getOverrideVariableName(name);
         pageContext.setAttribute(varName, b.getString());
         return EVAL_PAGE;
     }
 
     private boolean isOverrided() {
-        String varName = BlockUtils.getOverrideVariableName(name);
+        String varName = BlockUtil.getOverrideVariableName(name);
         return pageContext.getAttribute(varName) != null;
     }
 

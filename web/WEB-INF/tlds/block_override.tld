@@ -4,7 +4,7 @@
     <short-name>Block Override</short-name>
     <tag>
         <name>block</name>
-        <tag-class>tags.BlockTag</tag-class>
+        <tag-class>tag.BlockTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>name</name>
@@ -12,7 +12,7 @@
     </tag>
     <tag>
         <name>override</name>
-        <tag-class>tags.OverrideTag</tag-class>
+        <tag-class>tag.OverrideTag</tag-class>
         <body-content>JSP</body-content>
         <attribute>
             <name>name</name>

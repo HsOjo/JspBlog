@@ -1,6 +1,6 @@
-package tags;
+package tag;
 
-import utils.BlockUtils;
+import util.BlockUtil;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
@@ -35,7 +35,7 @@ public class BlockTag extends TagSupport {
     }
 
     private String getOverriedContent() {
-        String varName = BlockUtils.getOverrideVariableName(name);
+        String varName = BlockUtil.getOverrideVariableName(name);
         return (String) pageContext.getAttribute(varName);
     }
 }
