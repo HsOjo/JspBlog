@@ -65,7 +65,7 @@ public class JDBCUtils {
                 last_index = rs.getInt(1);
             result.put(JDBCUtils.EXEC_AFFECT_ROWS, affect_rows);
             result.put(JDBCUtils.EXEC_LAST_INDEX, last_index);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             result.put(JDBCUtils.EXEC_AFFECT_ROWS, -1);
         } finally {

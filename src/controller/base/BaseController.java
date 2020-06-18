@@ -25,21 +25,32 @@ public class BaseController extends HttpServlet {
         return String.format("/templates/%s/%s.jsp", module, action);
     }
 
-    public void fetch(HttpServletRequest req, HttpServletResponse resp, String path, HashMap<String, Object> values) throws ServletException, IOException {
+    public void fetch(HttpServletRequest req, HttpServletResponse resp, String path, HashMap<String, Object> values) {
         if (values != null)
             for (Map.Entry<String, Object> entry : values.entrySet())
                 req.setAttribute(entry.getKey(), entry.getValue());
 
         System.out.println(String.format("fetch: %s, %s", path, values));
         RequestDispatcher rd = req.getRequestDispatcher(path);
-        rd.forward(req, resp);
+        try {
+            rd.forward(req, resp);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void fetch(HttpServletRequest req, HttpServletResponse resp, HashMap<String, Object> values) throws ServletException, IOException {
+    public void fetch(HttpServletRequest req, HttpServletResponse resp, HashMap<String, Object> values) {
         this.fetch(req, resp, this.getTemplatePath(), values);
     }
 
-    public void fetch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void fetch(HttpServletRequest req, HttpServletResponse resp) {
         this.fetch(req, resp, this.getTemplatePath(), null);
+    }
+
+    public void redirect(HttpServletRequest req, HttpServletResponse resp, String url) {
+        resp.setStatus(resp.SC_MOVED_TEMPORARILY);
+        if (!url.contains("://"))
+            url = String.format("%s/%s", req.getContextPath(), url);
+        resp.setHeader("Location", url);
     }
 }

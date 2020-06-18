@@ -11,7 +11,7 @@ import java.io.IOException;
 @WebServlet("/user/logout")
 public class LogoutController extends BaseController {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.fetch(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+
     }
 }

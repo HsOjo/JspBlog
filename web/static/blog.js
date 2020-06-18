@@ -1,4 +1,3 @@
-// 页面动画，课外内容，有兴趣的读者可自行学习。
 function load_posts() {
     let blog_posts = $('.blog-post');
     blog_posts.hide();
@@ -7,4 +6,13 @@ function load_posts() {
             $(v).fadeIn(300);
         }, i * 100);
     });
+}
+
+function show_blog_message() {
+    let name = '_blog_msg'
+    let blog_msg = $.cookie(name);
+    if (blog_msg !== undefined) {
+        alert(blog_msg)
+        $.removeCookie(name)
+    }
 }
