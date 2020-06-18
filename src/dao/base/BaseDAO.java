@@ -4,7 +4,6 @@ import dao.base.condition.And;
 import dao.base.condition.base.Condition;
 import utils.JDBCUtils;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public abstract class BaseDAO<Entity> {
@@ -38,31 +37,29 @@ public abstract class BaseDAO<Entity> {
         this.query_order = new ArrayList<>();
     }
 
-    abstract protected Entity parseEntity(Map<String, Object> map) throws SQLException;
+    abstract protected Entity parseEntity(Map<String, Object> map);
+
+    protected Map<String, Object> convertData(Map<String, Object> data) {
+        return data;
+    }
 
     protected List<Entity> query(String sql, Object... params) {
-        System.out.println(String.format("query: %s", sql));
         this.reset();
+        System.out.println(String.format("query: %s, data: %s", sql, Arrays.asList(params)));
         List<Entity> entity_list = new ArrayList<>();
         List<Map<String, Object>> result = JDBCUtils.query(sql, params);
-        try {
-            for (Map<String, Object> map : result) {
-                entity_list.add(this.parseEntity(map));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        for (Map<String, Object> map : result) {
+            entity_list.add(this.parseEntity(map));
         }
         return entity_list;
     }
 
-    protected void execute(String sql, Object... params) {
-        System.out.println(String.format("execute: %s", sql));
+    protected Map<Integer, Object> execute(String sql, Object... params) {
         this.reset();
-        try {
-            JDBCUtils.exec(sql, params);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        System.out.println(String.format("execute: %s, data: %s", sql, Arrays.asList(params)));
+        Map<Integer, Object> result = JDBCUtils.execute(sql, params);
+        System.out.println(String.format("executed: %s", result));
+        return result;
     }
 
     public BaseDAO<Entity> column(String... columns) {
@@ -86,6 +83,7 @@ public abstract class BaseDAO<Entity> {
     }
 
     public BaseDAO<Entity> data(Map<String, Object> data) {
+        data = this.convertData(data);
         this.query_columns.addAll(data.keySet());
         this.query_params.addAll(data.values());
         return this;
@@ -159,30 +157,30 @@ public abstract class BaseDAO<Entity> {
         return this.query(sql, this.query_params.toArray());
     }
 
-    public void insert() {
+    public int insert() {
         String sql = String.format("INSERT INTO `%s` (%s) %s %s",
                 this.table_name, this.columnSql(false), this.valueSql(), this.whereSql()
         ).trim();
-        this.execute(sql, this.query_params.toArray());
+        return (int) this.execute(sql, this.query_params.toArray()).get(JDBCUtils.EXEC_LAST_INDEX);
     }
 
-    public void update() {
+    public int update() {
         String sql = String.format("UPDATE `%s` SET %s %s %s",
                 this.table_name, this.columnSql(true), this.whereSql(), this.limitSql()
         ).trim();
-        this.execute(sql, this.query_params.toArray());
+        return (int) this.execute(sql, this.query_params.toArray()).get(JDBCUtils.EXEC_AFFECT_ROWS);
     }
 
-    public void delete() {
+    public int delete() {
         String sql = String.format("DELETE FROM `%s` %s %s",
                 this.table_name, this.whereSql(), this.limitSql()
         ).trim();
-        this.execute(sql, this.query_params.toArray());
+        return (int) this.execute(sql, this.query_params.toArray()).get(JDBCUtils.EXEC_AFFECT_ROWS);
     }
 
     public Entity find() {
         Entity item = null;
-        List<Entity> items = this.select();
+        List<Entity> items = this.limit(1).select();
         if (items.size() > 0)
             item = items.get(0);
         return item;

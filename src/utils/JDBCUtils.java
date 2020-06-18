@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class JDBCUtils {
+    public static final int EXEC_AFFECT_ROWS = 1;
+    public static final int EXEC_LAST_INDEX = 2;
+
     private static Connection conn = null;
 
     static {
@@ -47,22 +50,38 @@ public class JDBCUtils {
     /**
      * 执行DML
      */
-    public static void exec(String sql, Object... params) throws SQLException {
-        Connection conn = null;
+    public static Map<Integer, Object> execute(String sql, Object... params) {
+        HashMap<Integer, Object> result = new HashMap<>();
         PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
-            conn = JDBCUtils.getConnection();
-            ps = conn.prepareStatement(sql);
+            Connection conn = JDBCUtils.getConnection();
+            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             JDBCUtils.formatSql(ps, params);
-            ps.execute();
+            int affect_rows = ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            int last_index = -1;
+            if (rs.next())
+                last_index = rs.getInt(1);
+            result.put(JDBCUtils.EXEC_AFFECT_ROWS, affect_rows);
+            result.put(JDBCUtils.EXEC_LAST_INDEX, last_index);
         } catch (Exception e) {
             e.printStackTrace();
+            result.put(JDBCUtils.EXEC_AFFECT_ROWS, -1);
         } finally {
-            if (ps != null) {
-                ps.close();
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                // conn.close();
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
-            // conn.close();
         }
+        return result;
     }
 
     /**
@@ -71,11 +90,10 @@ public class JDBCUtils {
     public static List<Map<String, Object>> query(String sql, Object... params) {
         List<Map<String, Object>> resultList = new ArrayList<>();
 
-        Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            conn = JDBCUtils.getConnection();
+            Connection conn = JDBCUtils.getConnection();
             ps = conn.prepareStatement(sql);
             JDBCUtils.formatSql(ps, params);
             rs = ps.executeQuery();

@@ -14,6 +14,10 @@ public class Custom implements Condition {
         this.params = params;
     }
 
+    public static Custom check(String content, Object... params) {
+        return new Custom(content, params);
+    }
+
     @Override
     public List<Object> params() {
         return Arrays.asList(this.params);

@@ -9,4 +9,8 @@ public class And extends MergeCondtion {
     public And(Condition... conditions) {
         super(And.exp, conditions);
     }
+
+    public static And check(Condition... conditions) {
+        return new And(conditions);
+    }
 }

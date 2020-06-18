@@ -17,6 +17,10 @@ public class Column implements Condition {
         this.value = value;
     }
 
+    public static Column check(String key, String exp, Object value) {
+        return new Column(key, exp, value);
+    }
+
     @Override
     public List<Object> params() {
         return Collections.singletonList(this.value);

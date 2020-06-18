@@ -9,4 +9,8 @@ public class Or extends MergeCondtion {
     public Or(Condition... conditions) {
         super(Or.exp, conditions);
     }
+
+    public static Or check(Condition... conditions) {
+        return new Or(conditions);
+    }
 }
