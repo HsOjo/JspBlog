@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Config {
     private static final String CFG_FILE = "config.json";
@@ -20,7 +21,14 @@ public class Config {
 
     static {
         try {
-            String config_str = FileUtils.readFileToString(new File(CFG_FILE), CFG_ENCODING);
+            String project_dir = Objects.requireNonNull(new Object() {
+            }.getClass().getClassLoader().getResource("")).getPath() + "../../../../.." ;
+
+            String config_path = String.format("%s/%s", project_dir, CFG_FILE);
+            String config_str = FileUtils.readFileToString(new File(config_path), CFG_ENCODING);
+
+            System.out.println(config_str);
+
             JSONObject config = JSON.parseObject(config_str);
             DB_HOST = config.getString("DB_HOST");
             DB_PORT = config.getInteger("DB_PORT");

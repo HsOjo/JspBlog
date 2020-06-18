@@ -74,4 +74,17 @@ public class Article {
     public void setUpdateTime(int update_time) {
         this.update_time = update_time;
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", category_id=" + category_id +
+                ", user_id=" + user_id +
+                ", create_time=" + create_time +
+                ", update_time=" + update_time +
+                '}';
+    }
 }

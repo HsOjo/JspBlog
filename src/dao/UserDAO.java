@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class UserDAO extends BaseDAO<User> {
+    public static UserDAO getInstance() {
+        return new UserDAO();
+    }
+
     @Override
     protected User parseEntity(Map<String, Object> map) throws SQLException {
         return new User(

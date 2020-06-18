@@ -74,4 +74,17 @@ public class User {
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", is_admin=" + is_admin +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", introduce='" + introduce + '\'' +
+                '}';
+    }
 }

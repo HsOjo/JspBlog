@@ -34,4 +34,13 @@ public class Setting {
     public void setData(String data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "Setting{" +
+                "id=" + id +
+                ", key='" + key + '\'' +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }

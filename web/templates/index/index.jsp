@@ -4,7 +4,7 @@
 <t:override name="title">首页</t:override>
 
 <t:override name="body">
-    <button class="btn btn-success">测试</button>
+    <button class="btn btn-success">${requestScope.get("test")}</button>
 </t:override>
 
 <%@include file="/templates/common/base.jsp" %>
