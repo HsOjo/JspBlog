@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,5 +53,15 @@ public class BaseController extends HttpServlet {
         if (!url.contains("://"))
             url = String.format("%s/%s", req.getContextPath(), url);
         resp.setHeader("Location", url);
+    }
+
+    public Map<String, String> param(HttpServletRequest req) {
+        HashMap<String, String> params = new HashMap<>();
+        Enumeration<String> names = req.getParameterNames();
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            params.put(name, req.getParameter(name));
+        }
+        return params;
     }
 }

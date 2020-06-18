@@ -50,6 +50,7 @@ public class CookieUtils {
         else
             cookie.setValue(value);
         cookie.setMaxAge(this.max_age);
+        cookie.setPath("/");
         this.set(name, cookie);
     }
 }

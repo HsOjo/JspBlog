@@ -13,6 +13,6 @@ function show_blog_message() {
     let blog_msg = $.cookie(name);
     if (blog_msg !== undefined) {
         alert(blog_msg)
-        $.removeCookie(name)
+        $.removeCookie(name, {path: '/'})
     }
 }

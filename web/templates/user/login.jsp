@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="input-password">密码</label>
-                <input class="form-control" type="password" id="input-password" name="username">
+                <input class="form-control" type="password" id="input-password" name="password">
             </div>
             <button class="btn btn-primary" type="submit">登录</button>
             <a class="btn btn-default" href="${ctx}/templates/user/register.jsp">注册</a>

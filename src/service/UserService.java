@@ -30,4 +30,11 @@ public class UserService {
         data.put("introduce", introduce);
         return this.dao.data(data).insert();
     }
+
+    public User login(String username, String password) {
+        return this.dao.where(
+                Column.check("username", "=", username),
+                Column.check("password", "=", password)
+        ).find();
+    }
 }
