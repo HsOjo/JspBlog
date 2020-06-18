@@ -1,6 +1,6 @@
-package util;
+package utils;
 
-public class BlockUtil {
+public class BlockUtils {
     public static String BLOCK = "__override__";
 
     public static String getOverrideVariableName(String name) {
