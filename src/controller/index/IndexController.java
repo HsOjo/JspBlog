@@ -1,6 +1,7 @@
 package controller.index;
 
 import controller.base.BaseController;
+import controller.base.HomeBaseController;
 import dao.UserDAO;
 import dao.base.condition.Column;
 import service.UserService;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @WebServlet("")
-public class IndexController extends BaseController {
+public class IndexController extends HomeBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         HashMap<String, Object> values = new HashMap<>();

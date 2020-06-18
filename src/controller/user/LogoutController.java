@@ -1,17 +1,17 @@
 package controller.user;
 
-import controller.base.BaseController;
+import controller.base.HomeBaseController;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @WebServlet("/user/logout")
-public class LogoutController extends BaseController {
+public class LogoutController extends HomeBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-
+        this.setCurrentUser(req, null);
+        this.message(req, resp, "注销成功");
+        this.redirect(req, resp, "user/login");
     }
 }

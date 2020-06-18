@@ -19,23 +19,21 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="true">
-                        {$logon_user.username | default='访客'}
+                        <c:out value="${current_user.username}" default="游客"/>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-<%--                        {notempty name="logon_user"}--%>
-<%--                        {notempty name="logon_user.is_admin"}--%>
-                        <li><a href="{:url('admin/index/index')}">管理后台</a></li>
-                        <li class="divider"></li>
-<%--                        {/notempty}--%>
-<%--                        {/notempty}--%>
-
-<%--                        {empty name="logon_user"}--%>
-                        <li><a href="${ctx}/user/login">登录</a></li>
-<%--                        {/empty}--%>
-
-<%--                        {notempty name="logon_user"}--%>
-                        <li><a href="${ctx}/user/logout">注销</a></li>
-<%--                        {/notempty}--%>
+                        <c:if test="${current_user.isAdmin}">
+                            <li><a href="${ctx}/admin/index">管理后台</a></li>
+                            <li class="divider"></li>
+                        </c:if>
+                        <c:choose>
+                            <c:when test="${current_user == null}">
+                                <li><a href="${ctx}/user/login">登录</a></li>
+                            </c:when>
+                            <c:otherwise>
+                                <li><a href="${ctx}/user/logout">注销</a></li>
+                            </c:otherwise>
+                        </c:choose>
                     </ul>
                 </li>
             </ul>

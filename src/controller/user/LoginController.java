@@ -14,7 +14,10 @@ import java.util.Map;
 public class LoginController extends HomeBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        this.fetch(req, resp);
+        if (this.getCurrentUser(req) == null)
+            this.fetch(req, resp);
+        else
+            this.redirect(req, resp, "");
     }
 
     @Override
@@ -25,6 +28,7 @@ public class LoginController extends HomeBaseController {
                 param.get("password")
         );
         if (user != null) {
+            this.setCurrentUser(req, user);
             this.message(req, resp, "登录成功");
             this.redirect(req, resp, "");
         } else {
