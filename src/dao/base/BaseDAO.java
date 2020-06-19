@@ -18,6 +18,8 @@ public abstract class BaseDAO<Entity> {
     protected Map<String, Object> query_data;
     protected ArrayList<Order> query_order;
 
+    private HashMap<String, HashMap<String, Object>> checkpoints;
+
     public BaseDAO() {
         this.table_name = FormatUtils.table(this.getClass().getSimpleName());
         this.reset();
@@ -37,6 +39,42 @@ public abstract class BaseDAO<Entity> {
         this.query_offset = -1;
         this.query_data = new HashMap<>();
         this.query_order = new ArrayList<>();
+    }
+
+    public BaseDAO<Entity> setCheckpoint(String name) {
+        if (checkpoints == null)
+            checkpoints = new HashMap<String, HashMap<String, Object>>();
+        HashMap<String, Object> checkpoint = new HashMap<>();
+        checkpoint.put("query_target", this.query_target);
+        checkpoint.put("query_columns", this.query_columns.clone());
+        checkpoint.put("query_params", this.query_params.clone());
+        checkpoint.put("query_condition", this.query_condition);
+        checkpoint.put("query_limit", this.query_limit);
+        checkpoint.put("query_offset", this.query_offset);
+        checkpoint.put("query_data", new HashMap<String, Object>(this.query_data));
+        checkpoint.put("query_order", this.query_order.clone());
+        if (this.checkpoints.containsKey(name))
+            this.checkpoints.replace(name, checkpoint);
+        else
+            this.checkpoints.put(name, checkpoint);
+        return this;
+    }
+
+    public BaseDAO<Entity> restoreCheckpoint(String name) {
+        if (checkpoints != null) {
+            HashMap<String, Object> checkpoint = checkpoints.get(name);
+            if (checkpoint != null) {
+                this.query_target = (String) checkpoint.get("query_target");
+                this.query_columns = (ArrayList<String>) checkpoint.get("query_columns");
+                this.query_params = (ArrayList<Object>) checkpoint.get("query_params");
+                this.query_condition = (Condition) checkpoint.get("query_condition");
+                this.query_limit = (int) checkpoint.get("query_limit");
+                this.query_offset = (int) checkpoint.get("query_offset");
+                this.query_data = (Map<String, Object>) checkpoint.get("query_data");
+                this.query_order = (ArrayList<Order>) checkpoint.get("query_order");
+            }
+        }
+        return this;
     }
 
     abstract protected Entity parseEntity(Map<String, Object> map);
@@ -218,5 +256,22 @@ public abstract class BaseDAO<Entity> {
         if (items.size() > 0)
             item = items.get(0);
         return item;
+    }
+
+    public Paginate<Entity> paginate(int per_page, int page) {
+        this.setCheckpoint("paginate");
+        int num = (int) this.count();
+
+        int max_page = num / per_page;
+        if (num % per_page != 0)
+            max_page++;
+
+        this.restoreCheckpoint("paginate");
+        List<Entity> items = this.offset((page - 1) * per_page).limit(per_page).select();
+        return new Paginate<>(page, max_page, per_page, items);
+    }
+
+    public Paginate<Entity> paginate(int page) {
+        return this.paginate(20, page);
     }
 }

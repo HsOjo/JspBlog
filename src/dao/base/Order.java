@@ -11,4 +11,8 @@ public class Order {
         this.column = column;
         this.order = order;
     }
+
+    public static Order by(String column, String order) {
+        return new Order(column, order);
+    }
 }

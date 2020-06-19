@@ -1,4 +1,4 @@
-package service.base;
+package dao.base;
 
 import java.util.List;
 
@@ -6,13 +6,13 @@ public class Paginate<Entity> {
     private final int current_page;
     private final int max_page;
     private final int per_page;
-    private final List<Entity> entities;
+    private final List<Entity> items;
 
-    public Paginate(int current_page, int max_page, int per_page, List<Entity> entities) {
+    public Paginate(int current_page, int max_page, int per_page, List<Entity> items) {
         this.current_page = current_page;
         this.max_page = max_page;
         this.per_page = per_page;
-        this.entities = entities;
+        this.items = items;
     }
 
     public int getCurrentPage() {
@@ -27,7 +27,7 @@ public class Paginate<Entity> {
         return per_page;
     }
 
-    public List<Entity> getEntities() {
-        return entities;
+    public List<Entity> getItems() {
+        return items;
     }
 }

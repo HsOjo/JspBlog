@@ -46,4 +46,13 @@ public class InfoSetting extends BaseSetting {
     public void setAbout(String about) {
         this.about = about;
     }
+
+    @Override
+    public String toString() {
+        return "InfoSetting{" +
+                "blog_title='" + blog_title + '\'' +
+                ", blog_description='" + blog_description + '\'' +
+                ", about='" + about + '\'' +
+                '}';
+    }
 }

@@ -8,7 +8,7 @@
         <h4>文章分类</h4>
         <ol class="list-unstyled">
             <c:forEach items="${categories}" var="category">
-                <li><a href="${ctx}/artcile/category?id=${category.id}">${category.name}</a></li>
+                <li><a href="${ctx}/article/category?id=${category.id}">${category.name}</a></li>
             </c:forEach>
         </ol>
     </div>

@@ -39,4 +39,12 @@ public class SiteSetting {
     public String toJson() {
         return JSON.toJSONString(this);
     }
+
+    @Override
+    public String toString() {
+        return "SiteSetting{" +
+                "site_name='" + site_name + '\'' +
+                ", site_footer='" + site_footer + '\'' +
+                '}';
+    }
 }
