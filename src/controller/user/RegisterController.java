@@ -19,7 +19,7 @@ public class RegisterController extends HomeBaseController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         Map<String, String> param = this.param(req);
-        int user_id = UserService.getInstance(UserDAO.getInstance()).register(
+        int user_id = UserService.getInstance().register(
                 param.get("username"),
                 param.get("password"),
                 false,

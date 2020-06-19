@@ -17,13 +17,7 @@ public class SettingDAO extends BaseDAO<Setting> {
         return new Setting(
                 (int) map.get("id"),
                 (String) map.get("key"),
-                JSON.parseObject((String) map.get("data")).getInnerMap()
+                (String) map.get("data")
         );
-    }
-
-    @Override
-    protected Map<String, Object> convertData(Map<String, Object> data) {
-        data.replace("data", JSON.toJSONString(data.get("data")));
-        return data;
     }
 }

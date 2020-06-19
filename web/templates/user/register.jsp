@@ -4,31 +4,33 @@
 <t:override name="title">用户注册</t:override>
 
 <t:override name="body">
-    <div class="col-md-4">
-        <form method="post" action="${ctx}/user/register" id="form-register">
-            <div class="form-group">
-                <label class="control-label" for="input-username">用户名</label>
-                <input class="form-control" type="text" id="input-username" name="username">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="input-password">密码</label>
-                <input class="form-control" type="password" id="input-password" name="password">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="input-email">邮箱</label>
-                <input class="form-control" type="email" id="input-email" name="email">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="input-phone">手机号</label>
-                <input class="form-control" type="number" id="input-phone" name="phone">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="input-introduce">个人简介</label>
-                <textarea class="form-control" id="input-introduce" name="introduce"></textarea>
-            </div>
-            <button class="btn btn-primary" type="submit">注册</button>
-            <a class="btn btn-default" href="${ctx}/templates/user/login.jsp">登录</a>
-        </form>
+    <div class="container">
+        <div class="col-md-4">
+            <form method="post" action="${ctx}/user/register" id="form-register">
+                <div class="form-group">
+                    <label class="control-label" for="input-username">用户名</label>
+                    <input class="form-control" type="text" id="input-username" name="username">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="input-password">密码</label>
+                    <input class="form-control" type="password" id="input-password" name="password">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="input-email">邮箱</label>
+                    <input class="form-control" type="email" id="input-email" name="email">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="input-phone">手机号</label>
+                    <input class="form-control" type="number" id="input-phone" name="phone">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="input-introduce">个人简介</label>
+                    <textarea class="form-control" id="input-introduce" name="introduce"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">注册</button>
+                <a class="btn btn-default" href="${ctx}/templates/user/login.jsp">登录</a>
+            </form>
+        </div>
     </div>
 </t:override>
 

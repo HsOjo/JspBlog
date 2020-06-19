@@ -23,7 +23,7 @@ public class LoginController extends HomeBaseController {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         Map<String, String> param = this.param(req);
-        User user = UserService.getInstance(UserDAO.getInstance()).login(
+        User user = UserService.getInstance().login(
                 param.get("username"),
                 param.get("password")
         );

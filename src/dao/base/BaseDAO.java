@@ -14,6 +14,7 @@ public abstract class BaseDAO<Entity> {
     protected ArrayList<Object> query_params;
     protected Condition query_condition;
     protected int query_limit;
+    protected int query_offset;
     protected Map<String, Object> query_data;
     protected ArrayList<Order> query_order;
 
@@ -33,6 +34,7 @@ public abstract class BaseDAO<Entity> {
         this.query_params = new ArrayList<>();
         this.query_condition = null;
         this.query_limit = 0;
+        this.query_offset = -1;
         this.query_data = new HashMap<>();
         this.query_order = new ArrayList<>();
     }
@@ -43,16 +45,22 @@ public abstract class BaseDAO<Entity> {
         return data;
     }
 
-    protected List<Entity> query(String sql, Object... params) {
+    protected List<Map<String, Object>> rawQuery(String sql, Object... params) {
         this.reset();
         System.out.println(String.format("query: %s, data: %s", sql, Arrays.asList(params)));
+        return JDBCUtils.query(sql, params);
+    }
+
+    protected List<Entity> query(String sql, Object... params) {
         List<Entity> entity_list = new ArrayList<>();
-        List<Map<String, Object>> result = JDBCUtils.query(sql, params);
-        for (Map<String, Object> map : result) {
-            entity_list.add(this.parseEntity(map));
-        }
+        List<Map<String, Object>> result = this.rawQuery(sql, params);
+        if (result != null)
+            for (Map<String, Object> map : result) {
+                entity_list.add(this.parseEntity(map));
+            }
         return entity_list;
     }
+
 
     protected Map<Integer, Object> execute(String sql, Object... params) {
         this.reset();
@@ -74,6 +82,11 @@ public abstract class BaseDAO<Entity> {
 
     public BaseDAO<Entity> limit(int limit) {
         this.query_limit = limit;
+        return this;
+    }
+
+    public BaseDAO<Entity> offset(int offset) {
+        this.query_offset = offset;
         return this;
     }
 
@@ -135,6 +148,13 @@ public abstract class BaseDAO<Entity> {
         return sql;
     }
 
+    protected String offsetSql() {
+        String sql = "";
+        if (this.query_offset != -1)
+            sql += String.format("OFFSET %d", this.query_offset);
+        return sql;
+    }
+
     protected String orderSql() {
         StringBuilder sql_sb = new StringBuilder();
         if (this.query_order.size() > 0)
@@ -151,10 +171,24 @@ public abstract class BaseDAO<Entity> {
     }
 
     public List<Entity> select() {
-        String sql = String.format("SELECT %s FROM `%s` %s %s %s",
-                this.columnSql(false), this.table_name, this.whereSql(), this.orderSql(), this.limitSql()
+        String sql = String.format("SELECT %s FROM `%s` %s %s %s %s",
+                this.columnSql(false), this.table_name,
+                this.whereSql(), this.orderSql(), this.limitSql(), this.offsetSql()
         ).trim();
         return this.query(sql, this.query_params.toArray());
+    }
+
+    public long count() {
+        String sql = String.format("SELECT COUNT(%s) AS `num` FROM `%s` %s %s %s %s",
+                this.columnSql(false), this.table_name,
+                this.whereSql(), this.orderSql(), this.limitSql(), this.offsetSql()
+        ).trim();
+        List<Map<String, Object>> result = this.rawQuery(sql, this.query_params.toArray());
+        long num = -1;
+        if (result != null && result.size() > 0)
+            num = (Long) (result.get(0).get("num"));
+
+        return num;
     }
 
     public int insert() {

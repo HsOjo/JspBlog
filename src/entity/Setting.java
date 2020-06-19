@@ -5,9 +5,9 @@ import java.util.Map;
 public class Setting {
     private int id;
     private String key;
-    private Map<String, Object> data;
+    private String data;
 
-    public Setting(int id, String key, Map<String, Object> data) {
+    public Setting(int id, String key, String data) {
         this.id = id;
         this.key = key;
         this.data = data;
@@ -29,11 +29,11 @@ public class Setting {
         this.key = key;
     }
 
-    public Map<String, Object> getData() {
+    public String getData() {
         return this.data;
     }
 
-    public void setData(Map<String, Object> data) {
+    public void setData(String data) {
         this.data = data;
     }
 

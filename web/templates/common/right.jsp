@@ -2,23 +2,22 @@
 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
     <div class="sidebar-module sidebar-module-inset">
         <h4>关于</h4>
-        <p>{{ info_setting.about }}</p>
+        <p><c:out value="${info_setting.about}" default="关于内容"/></p>
     </div>
     <div class="sidebar-module sidebar-module-inset">
         <h4>文章分类</h4>
         <ol class="list-unstyled">
-            {% for item in CategoryModel.query.all() %}
-            <li><a href="{{ url_for('article.category', name=item.name) }}">{{ item.name }}</a></li>
-            {% endfor %}
+            <c:forEach items="${categories}" var="category">
+                <li><a href="${ctx}/artcile/category?id=${category.id}">${category.name}</a></li>
+            </c:forEach>
         </ol>
     </div>
     <div class="sidebar-module sidebar-module-inset">
         <h4>友情链接</h4>
         <ol class="list-unstyled">
-            {% for item in FriendLinkModel.query.all() %}
-            <!-- target="_blank" 可以使点击链接在新页面打开 -->
-            <li><a href="{{ item.url }}" target="_blank">{{ item.name }}</a></li>
-            {% endfor %}
+            <c:forEach items="${friend_links}" var="friend_link">
+                <li><a href="${friend_link.url}" target="_blank">${friend_link.name}</a></li>
+            </c:forEach>
         </ol>
     </div>
 </div>
