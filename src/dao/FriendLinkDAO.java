@@ -15,7 +15,7 @@ public class FriendLinkDAO extends BaseDAO<FriendLink> {
         return new FriendLink(
                 (int) map.get("id"),
                 (String) map.get("name"),
-                (String) map.get("name")
+                (String) map.get("url")
         );
     }
 

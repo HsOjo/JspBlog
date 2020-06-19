@@ -2,7 +2,7 @@ package controller.admin.friend_link;
 
 import controller.base.AdminBaseController;
 import dao.FriendLinkDAO;
-import dao.UserDAO;
+import dao.FriendLinkDAO;
 import dao.base.condition.Column;
 import entity.FriendLink;
 
@@ -32,7 +32,7 @@ public class EditController extends AdminBaseController {
         this.authentication(req, resp);
         Map<String, Object> param = this.paramAsObject(req);
         int id = Integer.parseInt((String) param.get("id"));
-        int result = UserDAO.getInstance().data(param).where(Column.check("id", "=", id)).update();
+        int result = FriendLinkDAO.getInstance().data(param).where(Column.check("id", "=", id)).update();
         if (result > 0) {
             this.message(req, resp, "编辑成功");
         } else {

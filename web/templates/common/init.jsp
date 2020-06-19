@@ -7,3 +7,8 @@
 <%--@elvariable id="info_setting" type="entity.setting.InfoSetting"--%>
 <%--@elvariable id="categories" type="java.util.List<entity.Category>"--%>
 <%--@elvariable id="friend_links" type="java.util.List<entity.FriendLink>"--%>
+<%--@elvariable id="user_service" type="service.UserService"--%>
+<%--@elvariable id="article_service" type="service.ArticleService"--%>
+<%--@elvariable id="category_service" type="service.CategoryService"--%>
+<%--@elvariable id="convert_utils" type="utils.ConvertUtils"--%>
+<%--@elvariable id="paginate" type="dao.base.Paginate"--%>

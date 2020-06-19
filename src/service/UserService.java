@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class UserService {
     private final UserDAO dao;
+    private HashMap<Integer, User> user_buffer;
 
     public UserService() {
         this.dao = new UserDAO();
@@ -36,5 +37,18 @@ public class UserService {
                 Column.check("username", "=", username),
                 Column.check("password", "=", password)
         ).find();
+    }
+
+    public User getUserById(int user_id) {
+        if (this.user_buffer == null)
+            this.user_buffer = new HashMap<>();
+        User user;
+        if (user_buffer.containsKey(user_id)) {
+            user = user_buffer.get(user_id);
+        } else {
+            user = this.dao.where(Column.check("id", "=", user_id)).find();
+            this.user_buffer.put(user_id, user);
+        }
+        return user;
     }
 }

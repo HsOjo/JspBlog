@@ -17,17 +17,17 @@
                         </a>
                     </h2>
                     <p class="blog-post-meta">
-                        于 <c:out value="${article.createTime}" default="创建时间"/> 由
+                        于 <c:out value="${convert_utils.convertDateTime(article.createTime)}" default="创建时间"/> 由
                         <a href="${ctx}/user/view?id=${article.id}">
-                            <c:out value="${article.userId}" default="作者"/>
-                        </a> 发布，最后更新于 <c:out value="${article.updateTime}" default="更新时间"/>。
+                            <c:out value="${user_service.getUserById(article.userId).username}" default="作者"/>
+                        </a> 发布，最后更新于 <c:out value="${convert_utils.convertDateTime(article.updateTime)}" default="更新时间"/>。
                     </p>
                     <p><c:out
                             value="${article.content.length() >= 128 ? article.content.substring(0, 128) : article.content}"
                             default="文章内容"/>......</p>
                 </div>
             </c:forEach>
-            <div class="pagination"></div>
+            <%@include file="/templates/common/pagination.jsp" %>
         </div>
         <%@include file="/templates/common/right.jsp" %>
     </div>

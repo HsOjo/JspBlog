@@ -26,9 +26,9 @@
                 <tr>
                     <td>${article.id}</td>
                     <td>${article.title}</td>
-                    <td>${article.categoryId}</td>
-                    <td>${article.createTime}</td>
-                    <td>${article.updateTime}</td>
+                    <td>${category_service.getCategoryById(article.categoryId).name}</td>
+                    <td>${convert_utils.convertDateTime(article.createTime)}</td>
+                    <td>${convert_utils.convertDateTime(article.updateTime)}</td>
                     <td>
                         <a href="${ctx}/admin/article/edit?id=${article.id}">编辑</a>
                         <a href="${ctx}/admin/article/delete?id=${article.id}">删除</a>
@@ -38,7 +38,7 @@
             </tbody>
         </table>
     </div>
-    <div class="pagination">{$pages}</div>
+    <%@include file="/templates/common/pagination.jsp" %>
 </t:override>
 
 <%@include file="/templates/admin/base/base.jsp" %>

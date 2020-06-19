@@ -16,17 +16,17 @@
                         </a>
                     </h2>
                     <p class="blog-post-meta">
-                        于 <c:out value="${article.createTime}" default="创建时间"/> 由
+                        于 <c:out value="${convert_utils.convertDateTime(article.createTime)}" default="创建时间"/> 由
                         <a href="${ctx}/user/view?id=${article.id}">
-                            <c:out value="${article.userId}" default="作者"/>
-                        </a> 发布，最后更新于 <c:out value="${article.updateTime}" default="更新时间"/>。
+                            <c:out value="${user_service.getUserById(article.userId).username}" default="作者"/>
+                        </a> 发布，最后更新于 <c:out value="${convert_utils.convertDateTime(article.updateTime)}"
+                                             default="更新时间"/>。
                     </p>
                     <p><c:out value="${article.content}" default="文章内容"/></p>
                 </div>
 
                 <div class="row">
-                    <form method="post" action="{:url('blog/comment/commit', ['id' => $item.id])}"
-                          class="form-horizontal"
+                    <form method="post" action="${ctx}/article/comment?id=${article.id}" class="form-horizontal"
                           role="form">
                         <div class="form-group">
                             <label for="content" class="col-sm-3 control-label">留言内容：</label>
@@ -44,12 +44,12 @@
                         <div class="row">
                             <div class="col-xs-9">
                                 <h4>
-                                    <a href="${ctx}/user/view/${comment.userId}">
-                                        {$users[$comment.user_id]['username']}</a>：
+                                    <a href="${ctx}/user/view?id=${comment.userId}">
+                                            ${user_service.getUserById(comment.userId).username}</a>：
                                 </h4>
                             </div>
                             <div class="col-xs-3">
-                                <h5>${comment.createTime}</h5>
+                                <h5>${convert_utils.convertDateTime(comment.createTime)}</h5>
                             </div>
                             <div class="col-xs-12">
                                 <p class="form-control">${comment.content}</p>
@@ -62,7 +62,7 @@
                             <p style="text-align: center">暂时没有留言</p>
                         </c:when>
                         <c:otherwise>
-                            <div class="pagination">{$comment_pages}</div>
+                            <%@include file="/templates/common/pagination.jsp" %>
                         </c:otherwise>
                     </c:choose>
                 </div>

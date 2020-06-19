@@ -38,7 +38,7 @@
             </tbody>
         </table>
     </div>
-    <div class="pagination">{$pages}</div>
+    <%@include file="/templates/common/pagination.jsp" %>
 </t:override>
 
 <%@include file="/templates/admin/base/base.jsp" %>

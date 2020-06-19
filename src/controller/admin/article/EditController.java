@@ -2,10 +2,10 @@ package controller.admin.article;
 
 import controller.base.AdminBaseController;
 import dao.ArticleDAO;
-import dao.UserDAO;
+import dao.ArticleDAO;
 import dao.base.condition.Column;
 import entity.Article;
-import entity.User;
+import entity.Article;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +33,7 @@ public class EditController extends AdminBaseController {
         this.authentication(req, resp);
         Map<String, Object> param = this.paramAsObject(req);
         int id = Integer.parseInt((String) param.get("id"));
-        int result = UserDAO.getInstance().data(param).where(Column.check("id", "=", id)).update();
+        int result = ArticleDAO.getInstance().data(param).where(Column.check("id", "=", id)).update();
         if (result > 0) {
             this.message(req, resp, "编辑成功");
         } else {
