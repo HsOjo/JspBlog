@@ -47,6 +47,10 @@ public class InfoSetting extends BaseSetting {
         this.about = about;
     }
 
+    public String toJson() {
+        return JSON.toJSONString(this);
+    }
+
     @Override
     public String toString() {
         return "InfoSetting{" +

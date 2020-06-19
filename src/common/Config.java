@@ -22,7 +22,7 @@ public class Config {
     static {
         try {
             String project_dir = Objects.requireNonNull(new Object() {
-            }.getClass().getClassLoader().getResource("")).getPath() + "../../../../.." ;
+            }.getClass().getClassLoader().getResource("")).getPath() + "../../../../..";
 
             String config_path = String.format("%s/%s", project_dir, CFG_FILE);
             String config_str = FileUtils.readFileToString(new File(config_path), CFG_ENCODING);

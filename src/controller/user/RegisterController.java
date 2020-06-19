@@ -1,7 +1,6 @@
 package controller.user;
 
 import controller.base.HomeBaseController;
-import dao.UserDAO;
 import service.UserService;
 
 import javax.servlet.annotation.WebServlet;

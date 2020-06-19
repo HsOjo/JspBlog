@@ -3,7 +3,6 @@ package dao;
 import dao.base.BaseDAO;
 import entity.Article;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 public class ArticleDAO extends BaseDAO<Article> {

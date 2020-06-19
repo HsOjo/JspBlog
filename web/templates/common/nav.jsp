@@ -22,7 +22,7 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <c:if test="${current_user.isAdmin}">
-                            <li><a href="${ctx}/admin/index">管理后台</a></li>
+                            <li><a href="${ctx}/admin">管理后台</a></li>
                             <li class="divider"></li>
                         </c:if>
                         <c:choose>

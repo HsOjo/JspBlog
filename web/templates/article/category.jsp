@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/templates/common/init.jsp" %>
 <%--@elvariable id="paginate" type="dao.base.Paginate<entity.Article>"--%>
+<%--@elvariable id="category" type="entity.Category"--%>
 
-<t:override name="title">首页</t:override>
+<t:override name="title">分类：${category.name}</t:override>
 
 <t:override name="body">
     <div class="container">

@@ -1,7 +1,5 @@
 package entity;
 
-import java.util.Map;
-
 public class Setting {
     private int id;
     private String key;

@@ -1,5 +1,7 @@
 package controller.base;
 
+import utils.CookieUtils;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,11 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BaseController extends HttpServlet {
+    private static final String BLOG_MSG = "_blog_msg";
+
     public String getServletPath() {
         WebServlet annotation = this.getClass().getAnnotation(WebServlet.class);
         String[] values = annotation.value();
@@ -44,6 +49,10 @@ public class BaseController extends HttpServlet {
         this.fetch(req, resp, this.getTemplatePath(), values);
     }
 
+    public void fetch(HttpServletRequest req, HttpServletResponse resp, String path) {
+        this.fetch(req, resp, path, null);
+    }
+
     public void fetch(HttpServletRequest req, HttpServletResponse resp) {
         this.fetch(req, resp, this.getTemplatePath(), null);
     }
@@ -56,6 +65,12 @@ public class BaseController extends HttpServlet {
     }
 
     public Map<String, String> param(HttpServletRequest req) {
+        try {
+            req.setCharacterEncoding("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         HashMap<String, String> params = new HashMap<>();
         Enumeration<String> names = req.getParameterNames();
         while (names.hasMoreElements()) {
@@ -63,5 +78,10 @@ public class BaseController extends HttpServlet {
             params.put(name, req.getParameter(name));
         }
         return params;
+    }
+
+    public void message(HttpServletRequest req, HttpServletResponse resp, String msg) {
+        System.out.println(String.format("message: %s", msg));
+        CookieUtils.getInstance(req, resp).set(BLOG_MSG, msg);
     }
 }

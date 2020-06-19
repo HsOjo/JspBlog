@@ -3,7 +3,6 @@ package dao;
 import dao.base.BaseDAO;
 import entity.User;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 public class UserDAO extends BaseDAO<User> {

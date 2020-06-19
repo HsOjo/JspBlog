@@ -3,7 +3,6 @@ package dao;
 import dao.base.BaseDAO;
 import entity.Comment;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 public class CommentDAO extends BaseDAO<Comment> {

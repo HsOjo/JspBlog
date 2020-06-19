@@ -1,10 +1,8 @@
 package dao;
 
-import com.alibaba.fastjson.JSON;
 import dao.base.BaseDAO;
 import entity.Setting;
 
-import java.sql.SQLException;
 import java.util.Map;
 
 public class SettingDAO extends BaseDAO<Setting> {
