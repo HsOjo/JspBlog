@@ -11,7 +11,7 @@ function load_posts() {
 function show_blog_message() {
     let name = '_blog_msg'
     let blog_msg = $.cookie(name);
-    if (blog_msg !== undefined) {
+    if (blog_msg !== undefined && blog_msg.trim() !== "") {
         alert(blog_msg)
         $.removeCookie(name, {path: '/'})
     }

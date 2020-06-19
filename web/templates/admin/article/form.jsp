@@ -1,7 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%--@elvariable id="article" type="entity.Article"--%>
 
-<input type="hidden" name="user_id" id="user_id">
 <div class="form-group">
     <label for="title" class="col-sm-2 control-label">标题：</label>
     <div class="col-sm-10">
