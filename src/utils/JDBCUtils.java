@@ -1,7 +1,5 @@
 package utils;
 
-import common.Config;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
