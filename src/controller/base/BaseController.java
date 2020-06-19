@@ -80,6 +80,14 @@ public class BaseController extends HttpServlet {
         return params;
     }
 
+    public Map<String, Object> paramAsObject(HttpServletRequest req) {
+        HashMap<String, Object> param = new HashMap<>();
+        for (Map.Entry<String, String> entry : this.param(req).entrySet()) {
+            param.put(entry.getKey(), entry.getValue());
+        }
+        return param;
+    }
+
     public void message(HttpServletRequest req, HttpServletResponse resp, String msg) {
         System.out.println(String.format("message: %s", msg));
         CookieUtils.getInstance(req, resp).set(BLOG_MSG, msg);

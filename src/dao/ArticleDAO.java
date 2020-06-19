@@ -3,6 +3,7 @@ package dao;
 import dao.base.BaseDAO;
 import entity.Article;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ArticleDAO extends BaseDAO<Article> {
@@ -21,5 +22,10 @@ public class ArticleDAO extends BaseDAO<Article> {
                 (int) map.get("create_time"),
                 (int) map.get("update_time")
         );
+    }
+
+    @Override
+    public String[] fields() {
+        return new String[]{"title", "content", "category_id", "user_id", "create_time", "update_time"};
     }
 }

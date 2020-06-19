@@ -25,7 +25,13 @@ public class UserDAO extends BaseDAO<User> {
 
     @Override
     protected Map<String, Object> convertData(Map<String, Object> data) {
-        data.replace("is_admin", (boolean) data.get("is_admin") ? 1 : 0);
+        System.out.println("testtest:" + data);
+        data.replace("is_admin", ((boolean) data.getOrDefault("is_admin", false)) ? 1 : 0);
         return data;
+    }
+
+    @Override
+    public String[] fields() {
+        return new String[]{"id", "username", "password", "is_admin", "email", "phone", "introduce"};
     }
 }

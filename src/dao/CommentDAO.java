@@ -20,4 +20,9 @@ public class CommentDAO extends BaseDAO<Comment> {
                 (int) map.get("create_time")
         );
     }
+
+    @Override
+    public String[] fields() {
+        return new String[]{"id", "article_id", "user_id", "content", "create_time"};
+    }
 }

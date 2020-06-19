@@ -3,6 +3,7 @@ package dao;
 import dao.base.BaseDAO;
 import entity.Category;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CategoryDAO extends BaseDAO<Category> {
@@ -16,5 +17,11 @@ public class CategoryDAO extends BaseDAO<Category> {
                 (int) map.get("id"),
                 (String) map.get("name")
         );
+    }
+
+
+    @Override
+    public String[] fields() {
+        return new String[]{"id", "name"};
     }
 }

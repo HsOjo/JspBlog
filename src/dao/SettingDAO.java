@@ -18,4 +18,9 @@ public class SettingDAO extends BaseDAO<Setting> {
                 (String) map.get("data")
         );
     }
+
+    @Override
+    public String[] fields() {
+        return new String[]{"id", "key", "data"};
+    }
 }

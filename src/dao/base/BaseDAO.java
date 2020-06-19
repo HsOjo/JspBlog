@@ -134,9 +134,12 @@ public abstract class BaseDAO<Entity> {
     }
 
     public BaseDAO<Entity> data(Map<String, Object> data) {
-        data = this.convertData(data);
-        this.query_columns.addAll(data.keySet());
-        this.query_params.addAll(data.values());
+        if (data != null) {
+            data = this.fieldsClean(data);
+            data = this.convertData(data);
+            this.query_columns.addAll(data.keySet());
+            this.query_params.addAll(data.values());
+        }
         return this;
     }
 
@@ -273,5 +276,15 @@ public abstract class BaseDAO<Entity> {
 
     public Paginate<Entity> paginate(int page) {
         return this.paginate(20, page);
+    }
+
+    abstract public String[] fields();
+
+    private Map<String, Object> fieldsClean(Map<String, Object> data) {
+        Map<String, Object> data_clean = new HashMap<String, Object>();
+        for (String key : this.fields())
+            if (data.containsKey(key))
+                data_clean.put(key, data.get(key));
+        return data_clean;
     }
 }
