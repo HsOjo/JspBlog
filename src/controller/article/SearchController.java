@@ -19,8 +19,13 @@ public class SearchController extends HomeBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         Map<String, String> param = this.param(req);
-        int page = Integer.parseInt(param.getOrDefault("page", "1"));
         String keyword = param.get("keyword");
+        if (keyword.equals("")) {
+            this.redirect(req, resp, "");
+            return;
+        }
+
+        int page = Integer.parseInt(param.getOrDefault("page", "1"));
 
         ArticleDAO dao = ArticleDAO.getInstance();
         Paginate<Article> paginate = dao.where(Or.check(
