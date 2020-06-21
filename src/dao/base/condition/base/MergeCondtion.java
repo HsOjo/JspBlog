@@ -26,7 +26,7 @@ public class MergeCondtion implements Condition {
         StringBuilder sql_sb = new StringBuilder();
         for (Condition condition : this.conditions) {
             if (sql_sb.length() != 0)
-                sql_sb.append(this.exp);
+                sql_sb.append(String.format(" %s ", this.exp));
             sql_sb.append(condition.toSql());
         }
 

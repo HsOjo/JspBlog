@@ -31,12 +31,10 @@ public class SearchController extends HomeBaseController {
         Paginate<Article> paginate = dao.where(Or.check(
                 Column.check("title", "like", String.format("%%%s%%", keyword)),
                 Column.check("content", "like", String.format("%%%s%%", keyword))
-        )).setCheckpoint("where").order(Order.by("id", Order.DESC)).paginate(page);
-        long count = (long) dao.restoreCheckpoint("where").count();
+        )).order(Order.by("id", Order.DESC)).paginate(page);
 
         HashMap<String, Object> values = new HashMap<>();
         values.put("keyword", keyword);
-        values.put("count", count);
         values.put("paginate", paginate);
         this.fetch(req, resp, values);
     }

@@ -10,7 +10,7 @@
         <div class="col-sm-8 blog-main">
             <div class="blog-header">
                 <h1 class="blog-title"><c:out value="搜索：${keyword}" default="搜索内容"/></h1>
-                <p class="lead blog-description"><c:out value="结果数：${count}" default="搜索结果数"/></p>
+                <p class="lead blog-description"><c:out value="结果数：${paginate.count}" default="搜索结果数"/></p>
             </div>
             <c:forEach items="${paginate.items}" var="article">
                 <div class="blog-post">

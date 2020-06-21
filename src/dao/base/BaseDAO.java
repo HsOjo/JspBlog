@@ -220,16 +220,16 @@ public abstract class BaseDAO<Entity> {
     }
 
     public long count() {
-        String sql = String.format("SELECT COUNT(%s) AS `num` FROM `%s` %s %s %s %s",
+        String sql = String.format("SELECT COUNT(%s) AS `count` FROM `%s` %s %s %s %s",
                 this.columnSql(false), this.table_name,
                 this.whereSql(), this.orderSql(), this.limitSql(), this.offsetSql()
         ).trim();
         List<Map<String, Object>> result = this.rawQuery(sql, this.query_params.toArray());
-        long num = -1;
+        long count = -1;
         if (result != null && result.size() > 0)
-            num = (Long) (result.get(0).get("num"));
+            count = (Long) (result.get(0).get("count"));
 
-        return num;
+        return count;
     }
 
     public int insert() {
@@ -263,15 +263,16 @@ public abstract class BaseDAO<Entity> {
 
     public Paginate<Entity> paginate(int per_page, int page) {
         this.setCheckpoint("paginate");
-        int num = (int) this.count();
+        this.query_order.clear();
+        long count = this.count();
 
-        int max_page = num / per_page;
-        if (num % per_page != 0)
+        int max_page = (int) (count / per_page);
+        if (count % per_page != 0)
             max_page++;
 
         this.restoreCheckpoint("paginate");
         List<Entity> items = this.offset((page - 1) * per_page).limit(per_page).select();
-        return new Paginate<>(page, max_page, per_page, items);
+        return new Paginate<Entity>(page, max_page, per_page, count, items);
     }
 
     public Paginate<Entity> paginate(int page) {

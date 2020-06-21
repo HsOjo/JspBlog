@@ -29,6 +29,6 @@ public class Column implements Condition {
     @Override
     public String toSql() {
         String column = FormatUtils.column(this.column);
-        return column + this.exp + "?";
+        return String.format("%s %s ?", column, this.exp);
     }
 }
