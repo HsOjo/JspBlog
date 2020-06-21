@@ -15,13 +15,13 @@ import java.util.Map;
 public class AddController extends AdminBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.authentication(req, resp);
+        if (!this.authentication(req, resp)) return;
         this.fetch(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.authentication(req, resp);
+        if (!this.authentication(req, resp)) return;
         Map<String, String> param = this.param(req);
         HashMap<String, Object> data = new HashMap<>();
         data.put("name", param.get("name"));

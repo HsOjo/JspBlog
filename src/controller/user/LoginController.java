@@ -21,6 +21,7 @@ public class LoginController extends HomeBaseController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        if (!this.checkCaptcha(req, resp)) return;
         Map<String, String> param = this.param(req);
         User user = UserService.getInstance().login(
                 param.get("username"),

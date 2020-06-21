@@ -2,10 +2,8 @@ package controller.admin.article;
 
 import controller.base.AdminBaseController;
 import dao.ArticleDAO;
-import dao.UserDAO;
 import dao.base.Paginate;
 import entity.Article;
-import entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +17,7 @@ import java.util.Map;
 public class IndexController extends AdminBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.authentication(req, resp);
+        if (!this.authentication(req, resp)) return;
         Map<String, String> param = this.param(req);
         int page = Integer.parseInt(param.getOrDefault("page", "1"));
 

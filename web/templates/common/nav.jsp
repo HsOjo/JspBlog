@@ -36,6 +36,12 @@
                     </ul>
                 </li>
             </ul>
+            <form class="navbar-form navbar-right" action="${ctx}/article/search">
+                <label>
+                    <input name="keyword" type="text" class="form-control" placeholder="Search..."
+                           value="${keyword}">
+                </label>
+            </form>
         </div>
     </div>
 </nav>

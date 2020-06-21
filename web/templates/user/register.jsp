@@ -27,6 +27,11 @@
                     <label class="control-label" for="input-introduce">个人简介</label>
                     <textarea class="form-control" id="input-introduce" name="introduce"></textarea>
                 </div>
+                <div class="form-group">
+                    <label class="control-label" for="input-auth-code">验证码</label>
+                    <input class="form-control" type="text" id="input-auth-code" name="captcha">
+                    <img class="help-block" src="${ctx}/index/captcha" alt="验证码"/>
+                </div>
                 <button class="btn btn-primary" type="submit">注册</button>
                 <a class="btn btn-default" href="${ctx}/templates/user/login.jsp">登录</a>
             </form>

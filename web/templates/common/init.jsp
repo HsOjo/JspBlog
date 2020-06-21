@@ -12,3 +12,4 @@
 <%--@elvariable id="category_service" type="service.CategoryService"--%>
 <%--@elvariable id="convert_utils" type="utils.ConvertUtils"--%>
 <%--@elvariable id="paginate" type="dao.base.Paginate"--%>
+<%--@elvariable id="keyword" type="java.lang.String"--%>

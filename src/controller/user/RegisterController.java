@@ -17,6 +17,7 @@ public class RegisterController extends HomeBaseController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+        if (!this.checkCaptcha(req, resp)) return;
         Map<String, String> param = this.param(req);
         int user_id = UserService.getInstance().register(
                 param.get("username"),

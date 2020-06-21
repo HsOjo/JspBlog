@@ -14,11 +14,13 @@ public class AdminBaseController extends HomeBaseController {
         return String.format("/templates/admin/%s/%s.jsp", module, action);
     }
 
-    public void authentication(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean authentication(HttpServletRequest req, HttpServletResponse resp) {
         User user = this.getCurrentUser(req);
         if (user == null || !user.getIsAdmin()) {
             this.message(req, resp, "拒绝访问");
             this.redirect(req, resp, "user/login");
+            return false;
         }
+        return true;
     }
 }

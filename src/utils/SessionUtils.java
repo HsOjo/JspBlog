@@ -7,7 +7,6 @@ import java.util.*;
 
 public class SessionUtils {
     HttpServletRequest req;
-    HttpServletResponse resp;
     HttpSession session;
 
     public SessionUtils(HttpServletRequest req) {

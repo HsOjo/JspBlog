@@ -15,13 +15,13 @@ import java.util.Map;
 public class SiteSettingController extends AdminBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        this.authentication(req, resp);
+        if (!this.authentication(req, resp)) return;
         this.fetch(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.authentication(req, resp);
+        if (!this.authentication(req, resp)) return;
         Map<String, String> param = this.param(req);
         SettingService.getInstance().saveSiteSetting(param);
         this.fetch(req, resp);

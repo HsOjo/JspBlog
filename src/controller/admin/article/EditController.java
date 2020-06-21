@@ -2,9 +2,7 @@ package controller.admin.article;
 
 import controller.base.AdminBaseController;
 import dao.ArticleDAO;
-import dao.ArticleDAO;
 import dao.base.condition.Column;
-import entity.Article;
 import entity.Article;
 
 import javax.servlet.ServletException;
@@ -19,7 +17,7 @@ import java.util.Map;
 public class EditController extends AdminBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.authentication(req, resp);
+        if (!this.authentication(req, resp)) return;
         Map<String, String> param = this.param(req);
         int id = Integer.parseInt(param.get("id"));
         Article article = ArticleDAO.getInstance().where(Column.check("id", "=", id)).find();
@@ -30,7 +28,7 @@ public class EditController extends AdminBaseController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.authentication(req, resp);
+        if (!this.authentication(req, resp)) return;
         Map<String, Object> param = this.paramAsObject(req);
         int id = Integer.parseInt((String) param.get("id"));
         int result = ArticleDAO.getInstance().data(param).where(Column.check("id", "=", id)).update();

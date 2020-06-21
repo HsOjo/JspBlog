@@ -20,7 +20,7 @@ public class IndexController extends HomeBaseController {
         int page = Integer.parseInt(param.getOrDefault("page", "1"));
 
         Paginate<Article> paginate = ArticleDAO.getInstance().
-                order(Order.by("id", Order.DESC)).paginate(page);
+                order(Order.by("id", Order.DESC)).paginate(3, page);
 
         HashMap<String, Object> values = new HashMap<>();
         values.put("paginate", paginate);

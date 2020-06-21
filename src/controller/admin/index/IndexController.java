@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class IndexController extends AdminBaseController {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        this.authentication(req, resp);
+        if (!this.authentication(req, resp)) return;
         this.fetch(req, resp);
     }
 }

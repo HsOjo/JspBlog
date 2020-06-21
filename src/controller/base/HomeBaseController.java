@@ -9,13 +9,18 @@ import service.CategoryService;
 import service.SettingService;
 import service.UserService;
 import utils.ConvertUtils;
+import utils.HashUtils;
+import utils.SessionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 public class HomeBaseController extends UserBaseController {
+    public static final String CAPTCHA = "captcha";
+
     @Override
     public void fetch(HttpServletRequest req, HttpServletResponse resp, String path, HashMap<String, Object> values) {
         if (values == null)
@@ -40,5 +45,25 @@ public class HomeBaseController extends UserBaseController {
         values.put("convert_utils", convert_utils);
 
         super.fetch(req, resp, path, values);
+    }
+
+    public void refreshCaptcha(HttpServletRequest req) {
+        String captcha = HashUtils.md5(
+                String.valueOf((int) (new Date().getTime() / 1000)))
+                .substring(0, 4).toUpperCase();
+        SessionUtils.getInstance(req).set(CAPTCHA, captcha);
+    }
+
+    public String getCaptcha(HttpServletRequest req) {
+        return (String) SessionUtils.getInstance(req).get(CAPTCHA);
+    }
+
+    public boolean checkCaptcha(HttpServletRequest req, HttpServletResponse resp) {
+        if (!this.param(req).get(CAPTCHA).toUpperCase().equals(this.getCaptcha(req))) {
+            this.message(req, resp, "验证码错误");
+            this.redirect(req, resp, req.getHeader("Referer"));
+            return false;
+        }
+        return true;
     }
 }

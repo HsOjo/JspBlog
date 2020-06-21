@@ -1,15 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/templates/common/init.jsp" %>
 <%--@elvariable id="paginate" type="dao.base.Paginate<entity.Article>"--%>
-<%--@elvariable id="category" type="entity.Category"--%>
+<%--@elvariable id="count" type="java.lang.Long"--%>
 
-<t:override name="title">分类：${category.name}</t:override>
+<t:override name="title">搜索：${keyword}，结果数：${count}</t:override>
 
 <t:override name="body">
     <div class="container">
         <div class="col-sm-8 blog-main">
             <div class="blog-header">
-                <h1 class="blog-title"><c:out value="分类：${category.name}" default="分类列表"/></h1>
+                <h1 class="blog-title"><c:out value="搜索：${keyword}" default="搜索结果"/></h1>
             </div>
             <c:forEach items="${paginate.items}" var="article">
                 <div class="blog-post">
