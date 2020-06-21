@@ -3,6 +3,8 @@ package service;
 import dao.UserDAO;
 import dao.base.condition.Column;
 import entity.User;
+import sun.security.provider.MD5;
+import utils.HashUtils;
 
 import java.util.HashMap;
 
@@ -19,6 +21,7 @@ public class UserService {
     }
 
     public int register(String username, String password, boolean is_admin, String email, String phone, String introduce) {
+        password = HashUtils.md5(password);
         User user = this.dao.where(Column.check("username", "=", username)).find();
         if (user != null)
             return -1;
@@ -33,6 +36,7 @@ public class UserService {
     }
 
     public User login(String username, String password) {
+        password = HashUtils.md5(password);
         return this.dao.where(
                 Column.check("username", "=", username),
                 Column.check("password", "=", password)
