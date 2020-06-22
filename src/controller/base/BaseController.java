@@ -1,5 +1,6 @@
 package controller.base;
 
+import com.alibaba.fastjson.JSONObject;
 import utils.CookieUtils;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -91,5 +93,33 @@ public class BaseController extends HttpServlet {
     public void message(HttpServletRequest req, HttpServletResponse resp, String msg) {
         System.out.println(String.format("message: %s", msg));
         CookieUtils.getInstance(req, resp).set(BLOG_MSG, msg);
+    }
+
+    public boolean jsonResponse(HttpServletResponse resp, int code, String msg, Map<String, Object> data) {
+        try {
+            resp.setContentType("application/json;charset=UTF-8");
+            PrintWriter writer = resp.getWriter();
+            JSONObject resp_json = new JSONObject();
+            resp_json.put("code", code);
+            resp_json.put("msg", msg);
+            resp_json.put("data", data);
+            writer.print(resp_json.toJSONString());
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean jsonResponse(HttpServletResponse resp, int code, String msg) {
+        return this.jsonResponse(resp, code, msg, null);
+    }
+
+    public boolean jsonResponse(HttpServletResponse resp, String msg) {
+        return this.jsonResponse(resp, 0, msg, null);
+    }
+
+    public String url(HttpServletRequest req, String path) {
+        return String.format("%s/%s", req.getContextPath(), path);
     }
 }

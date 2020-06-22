@@ -58,12 +58,18 @@ public class HomeBaseController extends UserBaseController {
         return (String) SessionUtils.getInstance(req).get(CAPTCHA);
     }
 
-    public boolean checkCaptcha(HttpServletRequest req, HttpServletResponse resp) {
+    public boolean checkCaptcha(HttpServletRequest req, HttpServletResponse resp, boolean check_only) {
         if (!this.param(req).get(CAPTCHA).toUpperCase().equals(this.getCaptcha(req))) {
-            this.message(req, resp, "验证码错误");
-            this.redirect(req, resp, req.getHeader("Referer"));
+            if (!check_only) {
+                this.message(req, resp, "验证码错误");
+                this.redirect(req, resp, req.getHeader("Referer"));
+            }
             return false;
         }
         return true;
+    }
+
+    public boolean checkCaptcha(HttpServletRequest req, HttpServletResponse resp) {
+        return this.checkCaptcha(req, resp, false);
     }
 }

@@ -7,6 +7,7 @@ import service.UserService;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet("/user/login")
@@ -21,7 +22,11 @@ public class LoginController extends HomeBaseController {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        if (!this.checkCaptcha(req, resp)) return;
+        if (!this.checkCaptcha(req, resp, true)) {
+            this.jsonResponse(resp, 0, "验证码错误");
+            return;
+        }
+
         Map<String, String> param = this.param(req);
         User user = UserService.getInstance().login(
                 param.get("username"),
@@ -29,11 +34,11 @@ public class LoginController extends HomeBaseController {
         );
         if (user != null) {
             this.setCurrentUser(req, user);
-            this.message(req, resp, "登录成功");
-            this.redirect(req, resp, "");
+            HashMap<String, Object> data = new HashMap<>();
+            data.put("url", this.url(req, ""));
+            this.jsonResponse(resp, 1, "登录成功", data);
         } else {
-            this.message(req, resp, "登录失败");
-            this.fetch(req, resp);
+            this.jsonResponse(resp, 0, "登录失败，用户名或密码错误。");
         }
     }
 }

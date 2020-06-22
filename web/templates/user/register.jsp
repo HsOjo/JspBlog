@@ -32,29 +32,36 @@
                     <input class="form-control" type="text" id="input-auth-code" name="captcha">
                     <img class="help-block" src="${ctx}/index/captcha" alt="验证码"/>
                 </div>
-                <button class="btn btn-primary" type="submit">注册</button>
+                <button class="btn btn-primary" type="button" onclick="return callbackSubmit();">注册</button>
+                    <%--                <button class="btn btn-primary" type="submit">注册</button>--%>
                 <a class="btn btn-default" href="${ctx}/templates/user/login.jsp">登录</a>
             </form>
         </div>
     </div>
 </t:override>
 
-<t:override name="scripts">
+<t:override name="script">
     <script>
-        function registerValidate() {
-            let username = $('#input-username').val();
-            let password = $('#input-password').val();
-
-            if (username !== '' && password !== '') {
-                return true;
-            } else {
-                alert('用户名或密码不能为空');
-            }
+        function callbackSubmit() {
+            let form = $('#form-register');
+            $.ajax({
+                type: 'post',
+                url: form.attr('action'),
+                cache: false,
+                data: form.serialize(),
+                dataType: "json",
+                success: function (resp_data) {
+                    let code = resp_data['code'];
+                    let msg = resp_data['msg'];
+                    let data = resp_data['data'];
+                    alert(msg);
+                    if (code === 1)
+                        location.href = data['url'];
+                }
+            });
 
             return false;
         }
-
-        $('#form-register').submit(registerValidate);
     </script>
 </t:override>
 

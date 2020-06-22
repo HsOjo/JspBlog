@@ -9,6 +9,6 @@
 <%@ include file="nav.jsp" %>
 <t:block name="body">Body</t:block>
 <%@include file="scripts.jsp" %>
-<t:block name="scripts"/>
+<t:block name="script"/>
 </body>
 </html>
