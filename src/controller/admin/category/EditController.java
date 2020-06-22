@@ -1,4 +1,4 @@
-package controller.category;
+package controller.admin.category;
 
 import controller.base.AdminBaseController;
 import dao.CategoryDAO;
